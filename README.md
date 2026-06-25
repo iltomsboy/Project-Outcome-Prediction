@@ -1,168 +1,102 @@
-Project Success Prediction Using a Custom Bayesian Classifier
+# Project Success Prediction Using a Custom Bayesian Classifier
 
--------------------------------
-Overview:
+## Overview
 
-This project demonstrates how a data-driven approach can support project management decision-making by estimating the probability of project success. The workflow consists of three main stages:
-1) Synthetic dataset generation,
-2) Exploratory data analysis,
-3) Development of a custom Gaussian Naïve Bayes classifier.
+This project demonstrates how Bayesian inference can be applied to estimate the probability of project success based on key project characteristics.
 
-The project was developed as part of a research study exploring the application of probabilistic models to project success prediction.
+The workflow includes:
 
-Project Structure:
+1. Synthetic dataset generation
+2. Exploratory data analysis
+3. Development of a custom Gaussian Naïve Bayes classifier
+
+---
+
+## Project Structure
+
+```text
 ├── Dataset_Simulation.py      # Synthetic dataset generation
 ├── Dataset_Analysis.py        # Exploratory data analysis
-├── Bayesian_Algorithm.py      # Custom Bayesian prediction model
-├── Simulated_Dataset.csv      # Generated dataset (created by Dataset_Simulation.py)
+├── Bayesian_Algorithm.py      # Custom Bayesian classifier
+├── Simulated_Dataset.csv      # Generated dataset
 └── README.md
+```
 
--------------------------------
-Project Workflow:
+---
 
------ 1. Dataset Simulation -----
+## Features
 
-File: Dataset_Simulation.py
+The model uses four project-related variables:
 
-The first script generates a synthetic dataset representing projects characterized by four key variables:
-- Budget (thousand €),
-- Duration (months),
-- Team Size,
-- Manager Experience (years).
+- Budget (€ thousands)
+- Duration (months)
+- Team Size
+- Manager Experience (years)
 
-The variables are generated using normal distributions and constrained to realistic values.
+and predicts:
 
-A hidden logistic function is then used to create the target variable:
-- Success = 1,
-- Failure = 0.
+- Project Success (1)
+- Project Failure (0)
 
-The underlying assumption is that:
-- Higher budgets increase success probability,
-- More experienced managers increase success probability,
-- Larger teams slightly increase success probability, 
-- Longer project durations decrease success probability.
+---
 
-The generated dataset is exported as: Simulated_Dataset.csv
+## Scripts
 
------ 2. Exploratory Data Analysis -----
+### Dataset_Simulation.py
 
-File: Dataset_Analysis.py
+Generates a synthetic project management dataset using statistical distributions and a hidden probability model to simulate project outcomes.
 
-This script performs a preliminary analysis of the generated dataset.
+### Dataset_Analysis.py
 
-Descriptive Statistics - For each variable it computes:
->> Minimum, 
->> 25th Percentile, 
->> Median, 
->> 75th Percentile,
->> Maximum, 
->> Mean.
+Performs exploratory data analysis by calculating descriptive statistics and visualizing data distributions through normal curves and boxplots.
 
-Distribution Analysis - The script visualizes the distribution of each feature by plotting:
-- Normal distribution curves,
-- Boxplots.
+### Bayesian_Algorithm.py
 
-These visualizations help verify whether the generated data approximately follows the assumptions required by the Bayesian classifier.
+Implements a Gaussian Naïve Bayes classifier from scratch, trains the model, evaluates its performance, and predicts the probability of success for new projects.
 
------ 3. Bayesian Classification Model -----
+---
 
-File: Bayesian_Algorithm.py
+## Model Evaluation
 
-This script implements a Gaussian Naïve Bayes classifier from scratch, without using Scikit-Learn's built-in Naïve Bayes implementation.
+The dataset is split into:
 
-Main Components:
+- 80% Training Set
+- 20% Test Set
 
-Prior Probabilities - The model estimates:
-- P(success),
-- P(failure).
+Performance is evaluated using:
 
-from the training dataset.
+- Accuracy Score
+- Confusion Matrix
 
-Gaussian Parameters - For every feature and class, the model stores:
-- Mean,
-- Standard deviation.
+---
 
-Examples:
-Budget | Success
-Budget | Failure
-Duration | Success
-Duration | Failure
-Gaussian Probability Density Function
+## Technologies Used
 
-The likelihood of observing a feature value is computed using the Gaussian PDF:
->> P(xi | Success),
->> P(xi | Failure).
+- Python
+- NumPy
+- Pandas
+- Matplotlib
+- SciPy
+- Scikit-Learn
 
-assuming each feature follows a normal distribution.
+---
 
-Bayes' Theorem - The posterior probabilities are calculated as:
-- P(Success | X),
-- P(Failure | X).
+## Purpose
 
-where X represents the project characteristics.
+This project was developed for educational and research purposes to demonstrate:
 
-Classification - Projects are classified using a threshold:
-If P(Success) ≥ 0.5 → Successful Project
-Else → Failed Project
+- Synthetic data generation
+- Exploratory data analysis
+- Bayesian inference
+- Machine learning fundamentals
+- Custom implementation of a Gaussian Naïve Bayes classifier
 
-Model Evaluation - The dataset is divided into:
-- 80% Training Set,
-- 20% Test Set.
+---
 
-The model performance is evaluated using:
-- Accuracy Score => Measures the proportion of correctly classified projects.
-- Confusion Matrix => Provides detailed information about:
-        - True Positives,
-        - True Negatives
-        - False Positives
-        - False Negatives
+## Author
 
-User Interaction - After training the model, the user can manually enter the characteristics of a new project:
->> Budget,
->> Duration, 
->> Team Size,
->> Manager Experience.
-
-The model then estimates:
-- P(Failure | Project Data),
-- P(Success | Project Data).
-
-allowing project managers to assess the likelihood of project success before execution.
-
--------------------------------
-Technologies Used:
-Python
-NumPy
-Pandas
-Matplotlib
-SciPy
-Scikit-Learn
-Educational Purpose
-
--------------------------------
-This project was developed primarily for educational and research purposes to demonstrate:
-1) Synthetic data generation,
-2) Exploratory data analysis,
-3) Probabilistic machine learning,
-4) Bayesian inference,
-5) Implementation of a Gaussian Naïve Bayes classifier from scratch.
-
-The focus is not on achieving state-of-the-art predictive performance, but on understanding the mathematical foundations behind Bayesian classification and its potential application in project management decision-making.
-
--------------------------------
-Future Improvements - Possible extensions of the project include:
---> Using real-world project management datasets,
---> Feature engineering and additional project variables,
---> Cross-validation techniques,
---> Comparison with other machine learning models:
-        - Logistic Regression,
-        - Decision Trees,
-        - Random Forests.
---> Hyperparameter optimization,
---> Development of a graphical user interface (GUI).
-
--------------------------------
-Author: Tommaso Cecchellero
+**Tommaso Cecchellero**
 
 Master's Degree in Business Management
-Research focus: Project Management, Data Analytics, and Artificial Intelligence Applications in Decision-Making.
+
+Interest areas: Project Management, Data Science, and Artificial Intelligence.
