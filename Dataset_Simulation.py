@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def simulate_project_data(n=200, random_state=42): # n = number of rows in the simulate dataset
+def simulate_project_data(n, random_state=42):     # n = number of rows in the simulate dataset
     np.random.seed(random_state)                   # using "seed" i'm generating always the same values >> useful for debuging
 
     # Feature distributions >> generated using a Normal Distribution
@@ -12,8 +12,10 @@ def simulate_project_data(n=200, random_state=42): # n = number of rows in the s
     manager_experience = np.random.normal(loc=7, scale=3, size=n)     # set randomly the manager's experience float years
 
     # Delete unrealistic values
+    budget = np.clip(budget, 10, None)                                # budget must be at least 10k euro
     duration = np.clip(duration, 1, None)                             # project must last at least 1 month
     team_size = np.clip(team_size, 2, None)                           # team size at least 2 persons: manager + employee
+    team_size = np.round(team_size).astype(int)                       # team size will have int values
     manager_experience = np.clip(manager_experience, 0, None)         # manager's experience cannot be negative
 
     # True underlying probability model (hidden from the classifier)
@@ -26,7 +28,7 @@ def simulate_project_data(n=200, random_state=42): # n = number of rows in the s
         + 0.35 * manager_experience
         - 5  # intercept to keep probabilities reasonable (AI choice)
     )
-
+    #
     probs = 1 / (1 + np.exp(-logits)) # transforming logits into Boolean probability
 
     # Generate binary outcomes
@@ -44,8 +46,6 @@ def simulate_project_data(n=200, random_state=42): # n = number of rows in the s
     return df
 
 # Creating the simulated dataset
-df = simulate_project_data(n=200)
+df = simulate_project_data(n=1000)
 print(df.head(7)) #print first 7 rows
 df.to_csv(r"C:\Users\Toms\Desktop\MASTER THESIS\Simulated_Dataset.csv", index=False) #to save it localy and use it for the algorithm creation
-
-
